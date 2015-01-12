@@ -20,17 +20,17 @@ type AddressObject struct {
 }
 
 type GeoObject struct {
-	Location     GPSObject  `json:"location"`
+	Location     GPS        `json:"location"`
 	LocationType string     `json:"location_type"`
 	ViewPort     ViewObject `json:"viewport"`
 }
 
-type GPSObject struct {
+type GPS struct {
 	Lat float64 `json:"lat"`
 	Lon float64 `json:"lng"`
 }
 
 type ViewObject struct {
-	NoethEast GPSObject `json:"northeast"`
-	SouthWest GPSObject `json:"southwest"`
+	NoethEast GPS `json:"northeast"`
+	SouthWest GPS `json:"southwest"`
 }

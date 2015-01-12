@@ -4,19 +4,20 @@ import "testing"
 
 func TestAddress2GPS(t *testing.T) {
 	cases := []struct {
-		addr     []rune
-		lat, lon float64
+		addr []rune
+		// lat, lon float64
+		result GPS
 	}{
-		{[]rune("台北市內湖區東湖路119巷49弄28號"), 25.0700363, 121.6165096},
+		{[]rune("台北市內湖區東湖路119巷49弄28號"), GPS{25.0700363, 121.6165096}},
 		// 25.0700363, 121.6165096
 	}
 	for _, c := range cases {
-		lat, lon := Address2GPS(c.addr)
-		if lat != c.lat {
-			t.Errorf("%s lat == %f, want %f\n", string(c.addr), lat, c.lat)
+		r := Address2GPS(c.addr)
+		if r.Lat != c.result.Lat {
+			t.Errorf("%s lat == %f, want %f\n", string(c.addr), r.Lat, c.result.Lat)
 		}
-		if lon != c.lon {
-			t.Errorf("%s lon == %f, want %f\n", string(c.addr), lon, c.lon)
+		if r.Lon != c.result.Lon {
+			t.Errorf("%s lon == %f, want %f\n", string(c.addr), r.Lon, c.result.Lon)
 		}
 	}
 }
