@@ -11,6 +11,13 @@ type ResultObject struct {
 	Geometry         GeoObject       `json:"geometry"`
 	PartialMatch     bool            `json:"partial_match"`
 	Types            []string        `json:"types"`
+	Icon             string          `json:"icon"`
+	ID               string          `json:"id"`
+	Name             string          `json:"name"`
+	PlaceID          string          `json:"place_id"`
+	Reference        string          `json:"reference"`
+	Scope            string          `json:"scope"`
+	Vicinity         string          `json:"vicinity"`
 }
 
 type AddressObject struct {
@@ -33,4 +40,11 @@ type GPS struct {
 type ViewObject struct {
 	NoethEast GPS `json:"northeast"`
 	SouthWest GPS `json:"southwest"`
+}
+
+type PlacesResult struct {
+	HtmlAttributions []string       `json:"html_attributions"`
+	NextPageToken    string         `json:"next_page_token"`
+	Results          []ResultObject `json:"results"`
+	Status           string         `json:"status"`
 }
