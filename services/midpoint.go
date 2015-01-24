@@ -1,12 +1,5 @@
 package service
 
-import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-)
-
 func LookingForMidpoint( position1 GPS, position2 GPS ) GPS {
 	var Position GPS
 	Position.Lat = ( position1.Lat + position2.Lat ) / 2
