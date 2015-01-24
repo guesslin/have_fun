@@ -1,4 +1,4 @@
-package service
+package services
 
 func LookingForMidpoint(position1 GPS, position2 GPS) GPS {
 	var Position GPS
