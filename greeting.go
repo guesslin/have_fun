@@ -26,5 +26,4 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Hello, %v!", u)
-	fmt.Fprintf(w, "lala!")
 }
