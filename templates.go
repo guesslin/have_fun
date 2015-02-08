@@ -16,7 +16,6 @@ const placesTemplateHTML = `
 <html>
   <body>
     <table style="width:100%">
-    {{.}}
       {{range .}}
       <tr>
       	<td>{{.Name}}</td>
