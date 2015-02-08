@@ -15,8 +15,15 @@ const AddresesForm = `
 const placesTemplateHTML = `
 <html>
   <body>
-    <p>First Address is</p>
-    <pre>{{.}}</pre>
+    <table style="width:100%">
+    {{.}}
+      {{range .}}
+      <tr>
+      	<td>{{.Name}}</td>
+      	<td>{{.Vicinity}}</td>
+      </tr>
+      {{end}}
+    </table>
   </body>
 </html>
 `
