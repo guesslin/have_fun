@@ -1,6 +1,8 @@
 package greeting
 
 import (
+	"appengine"
+	"appengine/urlfetch"
 	"fmt"
 	"github.com/guesslin/have_fun/services"
 	"html/template"
@@ -17,11 +19,12 @@ func root(w http.ResponseWriter, r *http.Request) {
 }
 
 func inplaces(w http.ResponseWriter, r *http.Request) {
-	point1 := services.Address2GPS([]rune(r.FormValue("address1")))
-	point2 := services.Address2GPS([]rune(r.FormValue("address2")))
-	fmt.Fprint(w, point2.Lat)
+	c := appengine.NewContext(r)
+	client := urlfetch.Client(c)
+	point1 := services.Address2GPS([]rune(r.FormValue("address1")), client)
+	point2 := services.Address2GPS([]rune(r.FormValue("address2")), client)
 	midpoint := services.LookingForMidpoint(point1, point2)
-	results := services.FindPlaces(midpoint, 100)
+	results := services.FindPlaces(midpoint, 100, client)
 	err := placesTemplate.Execute(w, results)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

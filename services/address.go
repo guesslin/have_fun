@@ -7,9 +7,9 @@ import (
 	"net/http"
 )
 
-func Address2GPS(addr []rune) GPS {
+func Address2GPS(addr []rune, c *http.Client) GPS {
 	url := "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" + string(addr)
-	resp, err := http.Get(url)
+	resp, err := c.Get(url)
 	if err != nil {
 		fmt.Println("GET NOTHING")
 		return GPS{}
