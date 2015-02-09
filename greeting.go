@@ -1,29 +1,34 @@
 package greeting
 
 import (
-	"fmt"
-	"net/http"
-
 	"appengine"
-	"appengine/user"
+	"appengine/urlfetch"
+	"fmt"
+	"github.com/guesslin/have_fun/services"
+	"html/template"
+	"net/http"
 )
 
 func init() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", root)
+	http.HandleFunc("/inplaces", inplaces)
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := user.Current(c)
-	if u == nil {
-		url, err := user.LoginURL(c, r.URL.String())
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Location", url)
-		w.WriteHeader(http.StatusFound)
-		return
-	}
-	fmt.Fprintf(w, "Hello, %v!", u)
+func root(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, AddresesForm)
 }
+
+func inplaces(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	client := urlfetch.Client(c)
+	point1 := services.Address2GPS([]rune(r.FormValue("address1")), client)
+	point2 := services.Address2GPS([]rune(r.FormValue("address2")), client)
+	midpoint := services.LookingForMidpoint(point1, point2)
+	results := services.FindPlaces(midpoint, 100, client)
+	err := placesTemplate.Execute(w, results)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+var placesTemplate = template.Must(template.New("inplaces").Parse(placesTemplateHTML))

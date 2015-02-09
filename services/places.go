@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-func FindPlaces(location GPS, radius int32) []ResultObject {
+func FindPlaces(location GPS, radius int32, c *http.Client) []ResultObject {
 	place_temp := "https://maps.googleapis.com/maps/api/place/search/json?radius=%d&sensor=false&key=%s&location=%f,%f"
 	places := fmt.Sprintf(place_temp, radius, Key, location.Lat, location.Lon)
-	resp, err := http.Get(places)
+	resp, err := c.Get(places)
 	if err != nil {
 		fmt.Printf("%+v\n", err)
 		return nil
