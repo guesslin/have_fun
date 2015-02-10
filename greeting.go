@@ -31,7 +31,7 @@ func inplaces(w http.ResponseWriter, r *http.Request) {
 	}
 	midpoint := services.LookingForMidpoint(point1, point2)
 	results := services.FindPlaces(midpoint, 100, client)
-	err := placesTemplate.Execute(w, results)
+	err = placesTemplate.Execute(w, results)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
