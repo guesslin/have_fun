@@ -21,8 +21,14 @@ func root(w http.ResponseWriter, r *http.Request) {
 func inplaces(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	client := urlfetch.Client(c)
-	point1 := services.Address2GPS([]rune(r.FormValue("address1")), client)
-	point2 := services.Address2GPS([]rune(r.FormValue("address2")), client)
+	point1, err := services.Address2GPS([]rune(r.FormValue("address1")), client)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	point2, err := services.Address2GPS([]rune(r.FormValue("address2")), client)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 	midpoint := services.LookingForMidpoint(point1, point2)
 	results := services.FindPlaces(midpoint, 100, client)
 	err := placesTemplate.Execute(w, results)

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"net/http"
 	"testing"
 )
 
@@ -12,8 +13,9 @@ func TestFindPlaces(t *testing.T) {
 	}{
 		{GPS{25.0700363, 121.6165096}, 100, "佳佳牛排"},
 	}
+	client := &http.Client{}
 	for _, c := range cases {
-		results := FindPlaces(c.in, c.radius)
+		results := FindPlaces(c.in, c.radius, client)
 		count := 0
 		for _, r := range results {
 			if r.Name == c.out {

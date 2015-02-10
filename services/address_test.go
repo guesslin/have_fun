@@ -1,6 +1,9 @@
 package services
 
-import "testing"
+import (
+	"net/http"
+	"testing"
+)
 
 func TestAddress2GPS(t *testing.T) {
 	cases := []struct {
@@ -11,8 +14,12 @@ func TestAddress2GPS(t *testing.T) {
 		{[]rune("台北市內湖區東湖路119巷49弄28號"), GPS{25.0700363, 121.6165096}},
 		// 25.0700363, 121.6165096
 	}
+	client := &http.Client{}
 	for _, c := range cases {
-		r := Address2GPS(c.addr)
+		r, err := Address2GPS(c.addr, client)
+		if err != nil {
+			t.Errorf("%v\n", err)
+		}
 		if r.Lat != c.result.Lat {
 			t.Errorf("%s lat == %f, want %f\n", string(c.addr), r.Lat, c.result.Lat)
 		}
