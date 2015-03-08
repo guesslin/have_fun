@@ -1,6 +1,6 @@
 package greeting
 
-onst placesTemplateHTML = `
+const placesTemplateHTML = `
 <html>
   <body>
     <table style="width:100%">
