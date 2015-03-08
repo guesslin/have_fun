@@ -3,19 +3,13 @@ package greeting
 import (
 	"appengine"
 	"appengine/urlfetch"
-	"fmt"
-	"github.com/guesslin/have_fun/services"
+	"github.com/guesslin/services"
 	"html/template"
 	"net/http"
 )
 
 func init() {
-	http.HandleFunc("/", root)
 	http.HandleFunc("/inplaces", inplaces)
-}
-
-func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, AddresesForm)
 }
 
 func inplaces(w http.ResponseWriter, r *http.Request) {
